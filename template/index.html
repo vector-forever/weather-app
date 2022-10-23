@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="static/main.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script type="text/javascript">
+        // Using jQuery.
+        
+        $(function() {
+            $('form').each(function() {
+                $(this).find('input').keypress(function(e) {
+                    // Enter pressed?
+                    if(e.which == 10 || e.which == 13) {
+                        this.form.submit();
+                    }
+                });
+        
+                $(this).find('input[type=submit]').hide();
+            });
+        });
+        </script>
+    <title>weather</title>
+</head>
+    <body>
+        <div class="row">
+           <div class="column">
+            <h1>
+                Want to know about the 
+            </h1><br>
+            <h1>weather out there?</h1>
+
+          </div>
+          <div class="container">
+              <div class="weather-side">
+                <div class="weather-gradient"></div>
+                <div class="date-container">
+                  <h2 class="date-dayname">{{day}}</h2><span class="date-day">{{date}}</span><i class="location-icon" data-feather="map-pin"></i><span class="location">{{name}}, {{country}}</span>
+                </div>
+                <div class="weather-container"><i class="weather-icon" data-feather="sun"></i>
+                  <h1 class="weather-temp">{{temp}}°C</h1>
+                  <h3 class="weather-desc">{{description}}</h3>
+                </div>
+              </div>
+              <div class="info-side">
+                <div class="today-info-container">
+                  <div class="today-info">
+                    <div class="precipitation"> <span class="title">PRESSURE</span><span class="value">{{pressure}}</span>
+                      <div class="clear"></div>
+                    </div>
+                    <div class="humidity"> <span class="title">HUMIDITY</span><span class="value">{{humidity}}</span>
+                      <div class="clear"></div>
+                    </div>
+                    <div class="wind"> <span class="title">WIND SPEED</span><span class="value">{{speed}} Km/hr</span>
+                      <div class="clear"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="week-container">
+                  <ul class="week-list">
+                    <li class="active"><i class="day-icon" data-feather="sun"></i><span class="day-name">{{day}}</span><span class="day-temp">{{temp}}°C</span></li>
+                    <li><i class="day-icon" data-feather="cloud"></i><span class="day-name">{{day2}}</span><span class="day-temp">{{temp2}}°C</span></li>
+                    <li><i class="day-icon" data-feather="cloud-snow"></i><span class="day-name">{{day3}}</span><span class="day-temp">{{temp3}}°C</span></li>
+                    <li><i class="day-icon" data-feather="cloud-rain"></i><span class="day-name">{{day4}}</span><span class="day-temp">{{temp4}}°C</span></li>
+                    <div class="clear"></div>
+                  </ul>
+                </div>
+                <div class="location-container">
+                  <form method="POST" class = "location-form">
+                    {% csrf_token %}
+                    <input type="text" name="city" class="location-input" value="{{request.POST.city}}" placeholder="Location...">
+                    <button class="location-button" type="submit"> <i data-feather="map-pin"></i><span>Change location</span></button>   
+                  </form>
+                </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </body>
+</html>
